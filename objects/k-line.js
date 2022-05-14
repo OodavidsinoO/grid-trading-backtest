@@ -18,7 +18,7 @@ class KLine {
             let start = orders.findIndex(order => !order.activate);
             while (start >= 1 && orders[start - 1].price <= price) {
                 // complete sell order orders[start - 1]
-                console.log(`sell operation @ ${round(orders[start - 1].price)}`);
+                console.log(`Sell operation @ ${round(orders[start - 1].price)}`);
                 totalProfit -= 0.0005;
                 if (orders[start - 1].init) {
                     if (config.includeInitProfit) {
@@ -41,7 +41,7 @@ class KLine {
             let start = orders.findIndex(order => !order.activate);
             while (start <= orders.length - 2 && orders[start + 1].price >= price) {
                 // complete buy order orders[start + 1]
-                console.log(`buy operation @ ${round(orders[start + 1].price)}`);
+                console.log(`Buy operation @ ${round(orders[start + 1].price)}`);
                 totalProfit -= 0.0005;
                 orders[start + 1].activate = false;
                 orders[start].activate = true;
@@ -91,8 +91,11 @@ class KLine {
             `base=${this.pair[0]}&quote=${this.pair[1]}&market=pionex.v2&` +
             `start=${start.unix()}&end=${end.unix()}&interval=${interval}&from=web`;
         
-        return this.restClient.get(path, {}).then(d => {
+        return this.restClient.get(path, {"referer": `https://www.pionex.com/zh-CN/trade/${this.pair[0]}_${this.pair[1]}`,
+                                          "user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36 Edg/101.0.1210.39"
+        }).then(d => {
             this.candles = d.history_price;
+            // console.log(d);
             return;   
         });
     }
