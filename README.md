@@ -9,7 +9,8 @@ yarn install
 ```
 
 Before you run, update config.js:
-```vim config.js
+```
+vim config.js
 ```
 Run: 
 ```
