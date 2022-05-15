@@ -18,7 +18,7 @@ class KLine {
             let start = orders.findIndex(order => !order.activate);
             while (start >= 1 && orders[start - 1].price <= price) {
                 // complete sell order orders[start - 1]
-                console.log(`Sell operation @ ${round(orders[start - 1].price)}`);
+                // console.log(`Sell operation @ ${round(orders[start - 1].price)}`);
                 totalProfit -= 0.0005;
                 if (orders[start - 1].init) {
                     if (config.includeInitProfit) {
@@ -41,7 +41,7 @@ class KLine {
             let start = orders.findIndex(order => !order.activate);
             while (start <= orders.length - 2 && orders[start + 1].price >= price) {
                 // complete buy order orders[start + 1]
-                console.log(`Buy operation @ ${round(orders[start + 1].price)}`);
+                // console.log(`Buy operation @ ${round(orders[start + 1].price)}`);
                 totalProfit -= 0.0005;
                 orders[start + 1].activate = false;
                 orders[start].activate = true;
@@ -80,9 +80,9 @@ class KLine {
             //console.log('5', orders, profit);
         });
         //console.log(this.candles);
-        console.log('sell operation:', sellCount, 'buy operation:', buyCount);
+        console.log('Sell operation:', sellCount, 'Buy operation:', buyCount);
         totalProfit /= orders.length + 1;
-        console.log('period profit: ', totalProfit);
+        console.log('Period profit: ', totalProfit);
         return totalProfit;
     }
     init(start, end, pair, interval) {

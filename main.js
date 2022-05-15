@@ -44,7 +44,7 @@ const kl = new KLine();
 kl.init(start, end, config.pair, config.interval).then(() => {
     let maxProfit = -Infinity, bestGridQuant = config.gridQuantRange[0];
     for (let gridQuant = config.gridQuantRange[0]; gridQuant <= config.gridQuantRange[1]; gridQuant++) {
-        console.log('testing grid quantity =', gridQuant);
+        console.log('Testing Grid Quantity =', gridQuant);
         const orders = createOrders(gridQuant, kl.candles[0].open);
         const profit = kl.backtest(orders);
         if (profit > maxProfit) {
@@ -54,8 +54,10 @@ kl.init(start, end, config.pair, config.interval).then(() => {
     }
     const days = (end - start) / 86400000;
     const annualReturn = round(maxProfit * 365 / days * 100);
-    console.log('Best grid quantity:', bestGridQuant);
-    console.log(`Estimated annual return: ${annualReturn}%`);
+    console.log('\x1B[32m=== Report ===\x1b[0m');
+    console.log('Best Grid Quantity:', bestGridQuant);
+    console.log(`Max Period Profit: \x1b[33m${round(maxProfit * 100)} %\x1b[0m`);
+    console.log(`Estimated Annual Return: \x1b[33m${annualReturn} %\x1b[0m`);
 });
 
 
