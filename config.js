@@ -26,5 +26,7 @@ module.exports = {
     // [2, 250]
     gridQuantRange: [2, 250],
     // whether to use start open price as buy-in price to calculate init profit
-    includeInitProfit: true
+    includeInitProfit: true,
+    // init principal USDT
+    initPrincipal: 1000,
 };

@@ -37,8 +37,8 @@ else {
     end = moment();
     start = moment().subtract(config.duration);
 }
-console.log('start:', start.toString());
-console.log('end:', end.toString());
+console.log('Start:', start.toString());
+console.log('End:', end.toString());
 // get k-line
 const kl = new KLine();
 kl.init(start, end, config.pair, config.interval).then(() => {
@@ -55,9 +55,13 @@ kl.init(start, end, config.pair, config.interval).then(() => {
     const days = (end - start) / 86400000;
     const annualReturn = round(maxProfit * 365 / days * 100);
     console.log('\x1B[32m=== Report ===\x1b[0m');
+    console.log('Starting Time:', start.toString());
+    console.log('Ending Time:', end.toString());
+    console.log(`Initial Principal: \x1B[33m${config.initPrincipal} USDT\x1b[0m`);
     console.log('Best Grid Quantity:', bestGridQuant);
-    console.log(`Max Period Profit: \x1b[33m${round(maxProfit * 100)} %\x1b[0m`);
-    console.log(`Estimated Annual Return: \x1b[33m${annualReturn} %\x1b[0m`);
+    console.log(`Max Period Profit: \x1b[32m${round(maxProfit * 100)} % (${round(config.initPrincipal * (1 + maxProfit))} USDT)\x1b[0m`);
+    console.log(`Estimated Annual Return: \x1b[32m${annualReturn} % (${round(config.initPrincipal * (1 + annualReturn/100))} USDT)\x1b[0m`);
+    console.log('\x1B[32m=== End Report ===\x1b[0m');
 });
 
 
