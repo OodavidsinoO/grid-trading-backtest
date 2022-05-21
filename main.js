@@ -57,10 +57,10 @@ kl.init(start, end, config.pair, config.interval).then(() => {
     console.log('\x1B[32m=== Report ===\x1b[0m');
     console.log('Starting Time:', start.toString());
     console.log('Ending Time:', end.toString());
-    console.log(`Initial Principal: \x1B[33m${config.initPrincipal} USDT\x1b[0m`);
+    console.log(`Initial Principal: \x1B[33m${config.initPrincipal} ${config.pair.split('-')[1]}\x1b[0m`);
     console.log('Best Grid Quantity:', bestGridQuant);
-    console.log(`Max Period Profit: \x1b[32m${round(maxProfit * 100)} % (${round(config.initPrincipal * (1 + maxProfit))} USDT)\x1b[0m`);
-    console.log(`Estimated Annual Return: \x1b[32m${annualReturn} % (${round(config.initPrincipal * (1 + annualReturn/100))} USDT)\x1b[0m`);
+    console.log(`Max Period Profit: \x1b[32m${round(maxProfit * 100)} % (${round(config.initPrincipal * (1 + maxProfit))} ${config.pair.split('-')[1]})\x1b[0m`);
+    console.log(`Estimated Annual Return: \x1b[32m${annualReturn} % (${round(config.initPrincipal * (1 + annualReturn/100))} ${config.pair.split('-')[1]})\x1b[0m`);
     console.log('\x1B[32m=== End Report ===\x1b[0m');
 });
 
