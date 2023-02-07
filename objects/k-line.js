@@ -7,6 +7,7 @@ const config = require('../config');
 const host = 'www.pionex.com'
 const port = 443;
 const round = n => Math.round(n * 10000) / 10000;
+const batchSizeEpoch = 2592000;
 
 class KLine {
 
@@ -85,22 +86,47 @@ class KLine {
         console.log('Period profit: ', totalProfit);
         return totalProfit;
     }
-    init(start, end, pair, interval) {
+    async init(start, end, pair, interval) {
         this.pair = pair.split('-');
+        let batchCount = Math.ceil(end.diff(start, 'seconds') / batchSizeEpoch);
+        let promises = [];
+        for (let i = 0; i < batchCount; i++) {
+            let batchStart = start.clone().add(i * batchSizeEpoch, 'seconds');
+            let batchEnd = batchStart.clone().add(batchSizeEpoch, 'seconds');
+            if (batchEnd.isAfter(end)) {
+                batchEnd = end;
+            }
+            promises.push(this.getKLine(batchStart, batchEnd, pair, interval));
+            console.log(`Batch candles ${i + 1} of ${batchCount} is loading`);
+            // sleep 1 second to avoid 429
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        return Promise.all(promises).then(() => {
+            this.candles = this.candles.sort((a, b) => a.date - b.date);
+            return;
+        });
+    }
+    getKLine(start, end, pair, interval) {
         const path = '/kline/query_unite_candle_data?' + 
             `base=${this.pair[0]}&quote=${this.pair[1]}&market=pionex.v2&` +
             `start=${start.unix()}&end=${end.unix()}&interval=${interval}&from=web`;
-        // console.log(path);
+        console.log(path);
         return this.restClient.get(path, {"referer": `https://www.pionex.com/en/trade/${this.pair[0]}_${this.pair[1]}`,
                                           "user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36 Edg/101.0.1210.39"
-        }).then(d => {
+                                         }
+            ).then(d => {
             if (d.error_code !== 0) {
                 console.error(d);
                 process.exit(1);
             }
-            this.candles = d.history_price;
+            if (!this.candles) {
+                this.candles = d.history_price;
+            }
+            else {
+                this.candles = this.candles.concat(d.history_price);
+            }
             // console.log(d);
-            return;   
+            return;
         });
     }
     constructor() {

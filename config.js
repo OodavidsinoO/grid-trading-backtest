@@ -20,9 +20,9 @@ module.exports = {
     pair: 'XRP-USDT',
     // for days longer than 30, interval should be at least 15m
     // available interval: 1m, 5m, 15m, 30m, 1h, 4h, 8h, 12h, 1d, 1w
-    interval: '1h',
-    upperLimit: 0.534,
-    lowerLimit: 0.29631,
+    interval: '1m',
+    upperLimit: 0.55,
+    lowerLimit: 0.3,
     // [2, 250]
     gridQuantRange: [2, 250],
     // whether to use start open price as buy-in price to calculate init profit
