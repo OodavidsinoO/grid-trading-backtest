@@ -42,6 +42,10 @@ console.log('End:', end.toString());
 // get k-line
 const kl = new KLine();
 kl.init(start, end, config.pair, config.interval).then(() => {
+    console.log('K-Line initialized');
+    // debug
+    // console.log(kl.candles, start, end, config.pair, config.interval);
+    // backtest
     let maxProfit = -Infinity, bestGridQuant = config.gridQuantRange[0];
     for (let gridQuant = config.gridQuantRange[0]; gridQuant <= config.gridQuantRange[1]; gridQuant++) {
         console.log('Testing Grid Quantity =', gridQuant);

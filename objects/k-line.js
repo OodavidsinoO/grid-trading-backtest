@@ -90,10 +90,14 @@ class KLine {
         const path = '/kline/query_unite_candle_data?' + 
             `base=${this.pair[0]}&quote=${this.pair[1]}&market=pionex.v2&` +
             `start=${start.unix()}&end=${end.unix()}&interval=${interval}&from=web`;
-        
-        return this.restClient.get(path, {"referer": `https://www.pionex.com/zh-CN/trade/${this.pair[0]}_${this.pair[1]}`,
+        // console.log(path);
+        return this.restClient.get(path, {"referer": `https://www.pionex.com/en/trade/${this.pair[0]}_${this.pair[1]}`,
                                           "user-agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36 Edg/101.0.1210.39"
         }).then(d => {
+            if (d.error_code !== 0) {
+                console.error(d);
+                process.exit(1);
+            }
             this.candles = d.history_price;
             // console.log(d);
             return;   

@@ -5,8 +5,8 @@ module.exports = {
     // if only end is provided, period: [end - duration, end]
     // if both start and end are not provided, period: [now - duration, now]
     // format: yyyy-mm-dd hh-mm-ss
-    start: '2021-05-23 08:08:08',
-    end: '2022-05-21 08:08:08',
+    start: '2022-05-01 08:00:00',
+    end: '2023-02-07 08:00:00',
     duration: {
         seconds: 0,
         minutes: 0,
@@ -17,16 +17,16 @@ module.exports = {
         years: 0
     },
     // pair
-    pair: 'BNB-ETH',
+    pair: 'XRP-USDT',
     // for days longer than 30, interval should be at least 15m
     // available interval: 1m, 5m, 15m, 30m, 1h, 4h, 8h, 12h, 1d, 1w
     interval: '1h',
-    upperLimit: 0.23,
-    lowerLimit: 0.1,
+    upperLimit: 0.534,
+    lowerLimit: 0.29631,
     // [2, 250]
     gridQuantRange: [2, 250],
     // whether to use start open price as buy-in price to calculate init profit
     includeInitProfit: true,
     // init principal USDT
-    initPrincipal: 0.51,
+    initPrincipal: 500,
 };
